@@ -4,8 +4,8 @@ namespace CarRentalVG.Common.Extensions;
 
 public static class VehicleExtensions
 {
-    public static int Duration(this DateTime startDate, DateTime endDate)
-    {
+   // public static int Duration(this DateTime startDate, DateTime endDate)
+    //{
 
-    }
+    //}
 }

@@ -20,11 +20,11 @@ namespace CarRentalVG.Data.Classes
         private void SeedData()
         {
             //creating Vehicles
-            Car car1 = new Car("ABC123", "Volvo", 10000, 1, VehicleTypes.Combi, 200, VehicleStatuses.Available);
-            Car car2 = new Car("DEF456", "SAAB", 20000, 1, VehicleTypes.Sedan, 100, VehicleStatuses.Available);
-            Car car3 = new Car("GHI789", "Tesla", 1000, 3, VehicleTypes.Sedan, 100, VehicleStatuses.Available);
-            Car car4 = new Car("JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, 300, VehicleStatuses.Available);
-            Car car5 = new Car("JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, 300, VehicleStatuses.Available);
+            Car car1 = new Car(1, "ABC123", "Volvo", 10000, 1, VehicleTypes.Combi, 200, VehicleStatuses.Available);
+            Car car2 = new Car(2, "DEF456", "SAAB", 20000, 1, VehicleTypes.Sedan, 100, VehicleStatuses.Available);
+            Car car3 = new Car(3, "GHI789", "Tesla", 1000, 3, VehicleTypes.Sedan, 100, VehicleStatuses.Available);
+            Car car4 = new Car(4, "JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, 300, VehicleStatuses.Available);
+            Car car5 = new Car(5, "JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, 300, VehicleStatuses.Available);
             Motorcycles mc1 = new Motorcycles("MNO234", "Yamaha", 44945, 0.5, VehicleTypes.Motorcycle, 200, VehicleStatuses.Available);
 
             _vehicles.Add(car1);
@@ -33,15 +33,13 @@ namespace CarRentalVG.Data.Classes
             _vehicles.Add(car4);
             _vehicles.Add(car5);
             _vehicles.Add(mc1);
-            AddVehicle();
-
+            
             //creating customers
-            Customer customer1 = new Customer(780925, "Göran", "Grenmoss");
-            Customer customer2 = new Customer(051025, "Al", "Kis");
-            Customer customer3 = new Customer(980905, "Sara", "Lastman");
-            Customer customer4 = new Customer(442211, "Inga-Britt", "Bäckermo");
+            Customer customer1 = new Customer(1, 780925, "Göran", "Grenmoss");
+            Customer customer2 = new Customer(2, 051025, "Al", "Kis");
+            Customer customer3 = new Customer(3, 980905, "Sara", "Lastman");
+            Customer customer4 = new Customer(4, 442211, "Inga-Britt", "Bäckermo");
 
-            AddCustomer();
             _persons.Add(customer1);
             _persons.Add(customer2);
             _persons.Add(customer3);
@@ -60,15 +58,15 @@ namespace CarRentalVG.Data.Classes
         }
 
         
-        public async Task AddCustomerAsync(int ssn, string firstName, string lastName)
+        public async Task AddCustomerAsync(int id, int ssn, string firstName, string lastName)
         {
             await Task.Run(() =>
             {
-                _persons.Add(new Customer(ssn, firstName, lastName));
+                _persons.Add(new Customer(id, ssn, firstName, lastName));
             });
         }
         
-        public async Task AddVehicleAsync(string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, int costDay, VehicleStatuses vehicleStatus)
+        public async Task AddVehicleAsync(int id, string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, int costDay, VehicleStatuses vehicleStatus)
         {
             await Task.Run(() =>
             {
@@ -78,7 +76,7 @@ namespace CarRentalVG.Data.Classes
                 }
                 else
                 {
-                    _vehicles.Add(new Car(regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
+                    _vehicles.Add(new Car(id, regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
                 }
             });
         }

@@ -5,6 +5,7 @@ namespace CarRentalVG.Common.Classes;
 
 public class Booking : IBooking
 {
+    public int Id { get; set; }
     public VehicleInherit Vehicle { get; set; }
     public IPerson Customer { get; set; }
     public int KmRented { get; set; }

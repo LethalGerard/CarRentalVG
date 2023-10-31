@@ -13,7 +13,7 @@ public class Car : VehicleInherit
     public double CostDay { get; }
     public VehicleStatuses VehicleStatus { get; set; }
 
-    public Car(string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, double costDay, VehicleStatuses vehicleStatus)
-        => (RegNo, Make, Odometer, CostKm, VehicleType, CostDay, VehicleStatus)
-        = (regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus);
+    public Car(int id, string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, double costDay, VehicleStatuses vehicleStatus)
+        => (Id, RegNo, Make, Odometer, CostKm, VehicleType, CostDay, VehicleStatus)
+        = (id, regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus);
 }
