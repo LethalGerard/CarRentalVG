@@ -2,8 +2,9 @@
 using CarRentalVG.Common.Interfaces;
 namespace CarRentalVG.Common.Classes;
 
-public class Car : IVehicle
+public class Car : VehicleInherit
 {
+    public int Id { get; set; }
     public string RegNo { get; }
     public string Make { get; }
     public int Odometer { get; set; }

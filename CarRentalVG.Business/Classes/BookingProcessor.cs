@@ -11,6 +11,6 @@ public class BookingProcessor
     public BookingProcessor(IData db) => _db = db;
 
     public IEnumerable<IPerson> GetCustomer() { return _db.GetCustomer(); }
-    public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) { return _db.GetVehicles(status); }
+    public IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default) { return _db.GetVehicles(status); }
     public IEnumerable<IBooking> GetBookings() { return _db.GetBookings(); }
 }

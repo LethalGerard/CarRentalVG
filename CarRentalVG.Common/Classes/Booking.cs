@@ -5,11 +5,11 @@ namespace CarRentalVG.Common.Classes;
 
 public class Booking : IBooking
 {
-    public IVehicle Vehicle { get; }
-    public IPerson Customer { get; }
-    public int KmRented { get; }
+    public VehicleInherit Vehicle { get; set; }
+    public IPerson Customer { get; set; }
+    public int KmRented { get; set; }
     public int? KmReturned { get; set; }
-    public DateTime PickupDate { get; }
+    public DateTime PickupDate { get; set; }
     public DateTime ReturnDate { get; set; }
     public double? TotalCost { get; set; }
     public bool Status { get; set; }
@@ -27,7 +27,7 @@ public class Booking : IBooking
         TotalCost = rentedDays * Vehicle.CostDay + distance * Vehicle.CostKm;
     }
 
-    public Booking(IVehicle vehicle, IPerson customer, int kmRented, DateTime pickupDate)
+    public Booking(VehicleInherit vehicle, IPerson customer, int kmRented, DateTime pickupDate)
     {
         (Vehicle, Customer, KmRented, PickupDate) =
         (vehicle, customer, kmRented, pickupDate);

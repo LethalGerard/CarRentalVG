@@ -8,8 +8,12 @@ namespace CarRentalVG.Data.Classes
     public class CollectionData : IData
     {
         readonly List<IPerson> _persons = new List<IPerson>();
-        readonly List<IVehicle> _vehicles = new List<IVehicle>();
+        readonly List<VehicleInherit> _vehicles = new List<VehicleInherit>();
         readonly List<IBooking> _bookings = new List<IBooking>();
+
+        public int NextVehicleId => _vehicles.Count.Equals(0) ? 1 : _vehicles.Max(b => b.Id) + 1;
+        public int NextPersonID => _persons.Count.Equals(0) ? 1 : _persons.Max(b => b.Id) + 1;
+        public int NextBookingId => _bookings.Count.Equals(0) ? 1 : _bookings.Max(b => b.Id) + 1;
 
         public CollectionData() => SeedData();
 
@@ -29,12 +33,14 @@ namespace CarRentalVG.Data.Classes
             _vehicles.Add(car4);
             _vehicles.Add(car5);
             _vehicles.Add(mc1);
+            AddVehicle();
 
             //creating customers
             Customer customer1 = new Customer(780925, "Göran", "Grenmoss");
             Customer customer2 = new Customer(051025, "Al", "Kis");
             Customer customer3 = new Customer(980905, "Sara", "Lastman");
             Customer customer4 = new Customer(442211, "Inga-Britt", "Bäckermo");
+
             AddCustomer();
             _persons.Add(customer1);
             _persons.Add(customer2);
@@ -53,22 +59,44 @@ namespace CarRentalVG.Data.Classes
 
         }
 
-        public int Ssn { get; set; }
-        public void AddCustomer(int ssn = 345233, string firstName = "Anna Holger", string lastName = "lastName")
+        
+        public async Task AddCustomerAsync(int ssn, string firstName, string lastName)
         {
-            _persons.Add(new Customer(ssn, firstName, lastName));
+            await Task.Run(() =>
+            {
+                _persons.Add(new Customer(ssn, firstName, lastName));
+            });
         }
+        
+        public async Task AddVehicleAsync(string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, int costDay, VehicleStatuses vehicleStatus)
+        {
+            await Task.Run(() =>
+            {
+                if (vehicleType == VehicleTypes.Motorcycle)
+                {
+                    _vehicles.Add(new Motorcycles(regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
+                }
+                else
+                {
+                    _vehicles.Add(new Car(regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
+                }
+            });
+        }
+
+
+
+
 
         IEnumerable<IPerson> GetCustomer() => _persons;
         IEnumerable<IBooking> GetBookings() => _bookings;
-        IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _vehicles;
+        IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default) => _vehicles;
 
         IEnumerable<IPerson> IData.GetCustomer()
         {
             return _persons;
         }
 
-        IEnumerable<IVehicle> IData.GetVehicles(VehicleStatuses status)
+        IEnumerable<VehicleInherit> IData.GetVehicles(VehicleStatuses status)
         {
             return _vehicles;
         }

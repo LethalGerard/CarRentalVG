@@ -1,10 +1,12 @@
-﻿using CarRentalVG.Common.Enums;
+﻿using CarRentalVG.Common.Classes;
+using CarRentalVG.Common.Enums;
 
 namespace CarRentalVG.Common.Interfaces;
 
 public interface IBooking
 {
-    IVehicle Vehicle { get; }
+    int Id { get; set; }
+    VehicleInherit Vehicle { get; }
     IPerson Customer { get; }
     int KmRented { get; }
     int? KmReturned { get; set; }

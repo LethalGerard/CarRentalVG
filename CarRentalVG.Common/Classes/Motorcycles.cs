@@ -3,8 +3,9 @@ using CarRentalVG.Common.Interfaces;
 
 namespace CarRentalVG.Common.Classes;
 
-public class Motorcycles : IVehicle
+public class Motorcycles : VehicleInherit
 {
+    public int Id { get; set; }
     public string RegNo { get; set; }
     public string Make { get; }
     public int Odometer { get; set; }
