@@ -9,6 +9,7 @@
 
 
 <h5>Customers</h5>
+
 <table class="table mb-5">
     <thead>
         <tr>
@@ -18,6 +19,12 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.Ssn" placeholder="SSN" /></td>
+            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.FirstName" placeholder="First Name" /></td>
+            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.LastName" placeholder="Last Name" /></td>
+            <td><button class="btn btn-primary" @onclick="bp.AddCustomer" @onclick="clearFields()">Add</button></td>
+        </tr>
         @*For every Customer in the list created*@
         @foreach (var person in bp.GetCustomer())
         {
@@ -29,8 +36,7 @@
         }
     </tbody>
     </table>
-
-
+ 
 
 
 <h5>Vehicles</h5>
@@ -58,14 +64,9 @@
                 <td>@vehicle.VehicleType</td>
                 <td>@vehicle.CostDay</td>
                 <td>
-                    @if (vehicle.VehicleStatus == VehicleStatuses.Available)
-                    {
-                        <span class="badge bg-success">Availabe</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-danger">Booked</span>
-                    }
+                  <span class="badge bg-@(vehicle.VehicleStatus == 
+                  VehicleStatuses.Available ? "success" : "danger")">@vehicle.VehicleStatus
+                  </span>
                 </td>
             </tr>
         }

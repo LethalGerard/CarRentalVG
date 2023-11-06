@@ -1,6 +1,7 @@
 ﻿using CarRentalVG.Common.Classes;
 using CarRentalVG.Common.Enums;
 using CarRentalVG.Common.Interfaces;
+using CarRentalVG.Data.Classes;
 using CarRentalVG.Data.Interfaces;
 
 namespace CarRentalVG.Business.Classes;
@@ -14,10 +15,19 @@ public class BookingProcessor
     public IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default) { return _db.GetVehicles(status); }
     public IEnumerable<IBooking> GetBookings() { return _db.GetBookings(); }
 
-    Customer c = new();
+    public Customer c = new();
+    public VehicleInherit v = new();
 
+    public void AddCustomer()
+    {
+        if (c.Ssn != null && c.FirstName != null && c.LastName != null)
+        {
+            int nextId = _db.NextPersonID;
+            IPerson inputCustomer = new Customer(default, c.Ssn, c.FirstName, c.LastName) 
+                                                { Id = nextId };
+            _db.Add(inputCustomer);
+        }        
 
-
-
+    }
 
 }

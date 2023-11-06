@@ -6,7 +6,8 @@ using CarRentalVG.Data.Interfaces;
 namespace CarRentalVG.Data.Classes
 {
     public class CollectionData : IData
-    {
+    {        
+        public void Add(IPerson inputCustomer) { _persons.Add(inputCustomer); }
         readonly List<IPerson> _persons = new List<IPerson>();
         readonly List<VehicleInherit> _vehicles = new List<VehicleInherit>();
         readonly List<IBooking> _bookings = new List<IBooking>();
@@ -14,6 +15,8 @@ namespace CarRentalVG.Data.Classes
         public int NextVehicleId => _vehicles.Count.Equals(0) ? 1 : _vehicles.Max(b => b.Id) + 1;
         public int NextPersonID => _persons.Count.Equals(0) ? 1 : _persons.Max(b => b.Id) + 1;
         public int NextBookingId => _bookings.Count.Equals(0) ? 1 : _bookings.Max(b => b.Id) + 1;
+
+        int IData.NextPersonID { get; set; }
 
         public CollectionData() => SeedData();
 
@@ -57,51 +60,39 @@ namespace CarRentalVG.Data.Classes
 
         }
 
-        
-        public async Task AddCustomerAsync(int id, int ssn, string firstName, string lastName)
+
+        public void AddCustomer(int id, int ssn, string firstName, string lastName)
         {
-            await Task.Run(() =>
-            {
-                _persons.Add(new Customer(id, ssn, firstName, lastName));
-            });
+            _persons.Add(new Customer(id, ssn, firstName, lastName));
         }
-        
-        public async Task AddVehicleAsync(int id, string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, int costDay, VehicleStatuses vehicleStatus)
-        {
-            await Task.Run(() =>
-            {
-                if (vehicleType == VehicleTypes.Motorcycle)
-                {
-                    _vehicles.Add(new Motorcycles(regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
-                }
-                else
-                {
-                    _vehicles.Add(new Car(id, regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
-                }
-            });
+
+        public void AddVehicleAsync(int id, string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, int costDay, VehicleStatuses vehicleStatus)
+        {            
+           if (vehicleType == VehicleTypes.Motorcycle)
+           {
+              _vehicles.Add(new Motorcycles(regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
+           }
+           else
+           {
+              _vehicles.Add(new Car(id, regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
+           }           
         }
 
 
 
 
 
-        IEnumerable<IPerson> GetCustomer() => _persons;
-        IEnumerable<IBooking> GetBookings() => _bookings;
-        IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default) => _vehicles;
+        public IEnumerable<IPerson> GetCustomer() => _persons;
+        public IEnumerable<IBooking> GetBookings() => _bookings;
+        public IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default) => _vehicles;
 
         IEnumerable<IPerson> IData.GetCustomer()
-        {
-            return _persons;
-        }
+        { return _persons; }
 
         IEnumerable<VehicleInherit> IData.GetVehicles(VehicleStatuses status)
-        {
-            return _vehicles;
-        }
+        { return _vehicles; }
 
         IEnumerable<IBooking> IData.GetBookings()
-        {
-            return _bookings;
-        }
+        { return _bookings; }
     }
 }
