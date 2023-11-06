@@ -6,7 +6,12 @@
 @inject BookingProcessor bp
 
 <h1>Car Rental</h1>
-
+@if (!string.IsNullOrEmpty(bp.alertMessage))
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">        
+        <p class="lead">@bp.alertMessage</p>
+    </div>
+}
 
 <h5>Customers</h5>
 

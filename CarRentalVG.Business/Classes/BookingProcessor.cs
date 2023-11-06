@@ -17,17 +17,25 @@ public class BookingProcessor
 
     public Customer c = new();
     public VehicleInherit v = new();
+    public string alertMessage = string.Empty;
 
     public void AddCustomer()
     {
-        if (c.Ssn != null && c.FirstName != null && c.LastName != null)
+        if (c.Ssn != 0 && c.FirstName != null && c.LastName != null)
         {
             int nextId = _db.NextPersonID;
             IPerson inputCustomer = new Customer(default, c.Ssn, c.FirstName, c.LastName) 
                                                 { Id = nextId };
             _db.Add(inputCustomer);
-        }        
-
+            c.Ssn = 0;
+            c.FirstName = "";
+            c.LastName = "";
+            alertMessage = "";
+        }
+        else 
+        {
+            alertMessage = "Check the input fields!";
+        }
     }
 
 }
