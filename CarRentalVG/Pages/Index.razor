@@ -23,7 +23,7 @@
             <td><input type="text" id="ssn" name="ssn" @bind="bp.c.Ssn" placeholder="SSN" /></td>
             <td><input type="text" id="ssn" name="ssn" @bind="bp.c.FirstName" placeholder="First Name" /></td>
             <td><input type="text" id="ssn" name="ssn" @bind="bp.c.LastName" placeholder="Last Name" /></td>
-            <td><button class="btn btn-primary" @onclick="bp.AddCustomer" @onclick="clearFields()">Add</button></td>
+            <td><button class="btn btn-primary" @onclick="bp.AddCustomer">Add</button></td>
         </tr>
         @*For every Customer in the list created*@
         @foreach (var person in bp.GetCustomer())
