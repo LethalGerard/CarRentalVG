@@ -17,7 +17,9 @@ public class BookingProcessor
 
     public Customer c = new();
     public VehicleInherit v = new();
+    // public Booking b = new();
     public string alertMessage = string.Empty;
+    public Customer selectedCustomer = new();
 
 
 
@@ -58,6 +60,13 @@ public class BookingProcessor
         {
             alertMessage = "Check the input Vehicle fields!";
         }
+    }
+
+    public void SubmitBooking(VehicleInherit vehicleBook, IPerson customerBook)
+    {
+        Booking newBooking = 
+            new Booking(vehicleBook, customerBook);
+        _db.AddBooking(newBooking);
     }
 
 }

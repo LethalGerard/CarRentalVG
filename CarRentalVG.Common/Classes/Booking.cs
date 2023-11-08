@@ -11,7 +11,7 @@ public class Booking : IBooking
     public int KmRented { get; set; }
     public int? KmReturned { get; set; }
     public DateTime PickupDate { get; set; }
-    public DateTime ReturnDate { get; set; }
+    public DateTime? ReturnDate { get; set; }
     public double? TotalCost { get; set; }
     public bool Status { get; set; }
 
@@ -28,15 +28,19 @@ public class Booking : IBooking
         TotalCost = rentedDays * Vehicle.CostDay + distance * Vehicle.CostKm;
     }
 
-    public Booking(VehicleInherit vehicle, IPerson customer, int kmRented, DateTime pickupDate)
+    public Booking(VehicleInherit vehicle, IPerson customer)
     {
-        (Vehicle, Customer, KmRented, PickupDate) =
-        (vehicle, customer, kmRented, pickupDate);
+        Vehicle     = vehicle;
+        Customer    = customer;
+        PickupDate  = DateTime.Now;
+        ReturnDate  = null;
+        KmReturned  = null;
+        TotalCost   = 0;
         Vehicle.VehicleStatus = VehicleStatuses.Booked;
         Status = true;
     }
 
-    public void ReturnVehicle(DateTime returnDate, int kmReturned)
+/*    public void ReturnVehicle(DateTime returnDate, int kmReturned)
     {
         Vehicle.Odometer = kmReturned;
         ReturnDate = returnDate;
@@ -45,5 +49,5 @@ public class Booking : IBooking
         Status = false;
         KmReturned = kmReturned;
     }
-
+*/
 }

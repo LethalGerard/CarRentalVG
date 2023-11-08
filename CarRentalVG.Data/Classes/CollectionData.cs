@@ -51,14 +51,19 @@ namespace CarRentalVG.Data.Classes
 
 
             //creating bookings
-            Booking booking1 = new Booking(car1, customer1, car1.Odometer, DateTime.Now);
+/*            Booking booking1 = new Booking(car1, customer1, car1.Odometer, DateTime.Now);
             Booking booking2 = new Booking(car2, customer2, car2.Odometer, DateTime.Now);
-
+*//*
             _bookings.Add(booking1);
             _bookings.Add(booking2);
 
-            booking1.ReturnVehicle(DateTime.Now, 10500);
+*//*            booking1.ReturnVehicle(DateTime.Now, 10500);
 
+*/        }
+
+        public void AddBooking(Booking booking)
+        {
+            _bookings.Add(booking);
         }
 
 

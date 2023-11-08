@@ -61,10 +61,10 @@
 
 
         <tr>
-            <td><input  @bind="bp.v.RegNo"       placeholder="RegNo" /></td>
-            <td><input  @bind="bp.v.Make"        placeholder="Make" /></td>
+            <td><input  @bind="bp.v.RegNo"    placeholder="RegNo" /></td>
+            <td><input  @bind="bp.v.Make"     placeholder="Make" /></td>
             <td><input  @bind="bp.v.Odometer" placeholder="Odometer" /></td>
-            <td><input  @bind="bp.v.CostKm"    placeholder="Cost/km" /></td>
+            <td><input  @bind="bp.v.CostKm"   placeholder="Cost/km" /></td>
             <td><select class="form-select" @bind="bp.v.VehicleType">
                 @foreach(var vt in Enum.GetValues(typeof(VehicleTypes)))
                     {
@@ -91,6 +91,16 @@
                   VehicleStatuses.Available ? "success" : "danger")">@vehicle.VehicleStatus
                   </span>
                 </td>
+                <td>
+                    <select class="form-select" @bind="bp.selectedCustomer.Ssn" >
+                        @foreach (var cb in bp.GetCustomer())
+                        {
+                            <option value="@cb.Ssn">@cb.FirstName @cb.LastName</option>
+                        }
+                    </select>
+                    <button class="btn btn-primary" @onclick="(()=>bp.SubmitBooking(vehicle, bp.selectedCustomer))">Add</button> 
+                </td>
+
             </tr>
         }
     </tbody>
@@ -134,7 +144,7 @@
                     <td>@booking.KmRented</td>
                     <td>@booking.KmReturned</td>
                     <td>@booking.PickupDate.ToString("dd/MM/yyyy")</td>
-                    <td>@booking.ReturnDate.ToString("dd/MM/yyyy")</td>
+                    <td>@booking.ReturnDate</td>
                     <td>@booking.TotalCost</td>
                     <td><span class="badge bg-success">Closed</span></td>
                 </tr>

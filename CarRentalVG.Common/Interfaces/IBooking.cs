@@ -11,7 +11,7 @@ public interface IBooking
     int KmRented { get; }
     int? KmReturned { get; set; }
     DateTime PickupDate { get; }
-    DateTime ReturnDate { get; set; }
+    DateTime? ReturnDate { get; set; }
     double? TotalCost { get; }
     bool Status { get; set; }
 }
