@@ -13,8 +13,5 @@ public class Customer : IPerson
         => (Ssn, FirstName, LastName)
          = (ssn, firstName, lastName);
 
-    public Customer()
-    {
-
-    }
+    public Customer() { }
 }

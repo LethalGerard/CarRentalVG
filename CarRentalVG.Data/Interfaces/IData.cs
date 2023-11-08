@@ -10,5 +10,6 @@ public interface IData
     IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default);
     IEnumerable<IBooking> GetBookings();
     public void Add(IPerson inputCustomer);
+    public void Add(VehicleInherit inputVehicle);
      int NextPersonID { get; set; }
 }

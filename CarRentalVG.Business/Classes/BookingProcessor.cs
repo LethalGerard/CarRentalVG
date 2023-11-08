@@ -36,7 +36,7 @@ public class BookingProcessor
         }
         else 
         {
-            alertMessage = "Check the input fields!";
+            alertMessage = "Check the input Customer fields!";
         }
     }
 
@@ -44,14 +44,19 @@ public class BookingProcessor
     {
         if (v.RegNo != null && v.Make != null && v.Odometer != null && v.CostKm != null && v.VehicleType != null && v.CostDay != null)
         {
-            VehicleInherit inputVehicle = new VehicleInherit(v.RegNo, v.Make, v.Odometer, v.CostKm, v.VehicleType, v.CostDay);
+            VehicleInherit inputVehicle = new VehicleInherit(default, v.RegNo, v.Make, v.Odometer, v.CostKm, v.VehicleType, v.CostDay, default);
             _db.Add(inputVehicle);
             v.RegNo = "";
             v.Make = "";
             v.Odometer = 0;
             v.CostKm = 0;
-          //  v.VehicleType = ;
+            v.VehicleType = default;
             v.CostDay = 0;
+            alertMessage = "";
+        }
+        else
+        {
+            alertMessage = "Check the input Vehicle fields!";
         }
     }
 

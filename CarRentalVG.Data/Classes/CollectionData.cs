@@ -6,7 +6,8 @@ using CarRentalVG.Data.Interfaces;
 namespace CarRentalVG.Data.Classes
 {
     public class CollectionData : IData
-    {        
+    {
+        public void Add(VehicleInherit inputVehicle) { _vehicles.Add(inputVehicle); }
         public void Add(IPerson inputCustomer) { _persons.Add(inputCustomer); }
         readonly List<IPerson> _persons = new List<IPerson>();
         readonly List<VehicleInherit> _vehicles = new List<VehicleInherit>();

@@ -8,7 +8,7 @@
 <h1>Car Rental</h1>
 @if (!string.IsNullOrEmpty(bp.alertMessage))
 {
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">        
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <p class="lead">@bp.alertMessage</p>
     </div>
 }
@@ -61,12 +61,17 @@
 
 
         <tr>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.v.RegNo"       placeholder="RegNo" /></td>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.v.Make"        placeholder="Make" /></td>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.v.Odometer"    placeholder="Odometer" /></td>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.v.CostKm"    placeholder="Cost/km" /></td>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.v.VehicleType"    placeholder="Type" /></td>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.v.CostDay"    placeholder="Cost/day" /></td>
+            <td><input  @bind="bp.v.RegNo"       placeholder="RegNo" /></td>
+            <td><input  @bind="bp.v.Make"        placeholder="Make" /></td>
+            <td><input  @bind="bp.v.Odometer" placeholder="Odometer" /></td>
+            <td><input  @bind="bp.v.CostKm"    placeholder="Cost/km" /></td>
+            <td><select class="form-select" @bind="bp.v.VehicleType">
+                @foreach(var vt in Enum.GetValues(typeof(VehicleTypes)))
+                    {
+                        <option value="@vt">@vt</option>
+                    }
+                </select></td>
+            <td><input  @bind="bp.v.CostDay"    placeholder="Cost/day" /></td>
             <td><button class="btn btn-primary" @onclick="bp.AddVehicle">Add</button></td>
         </tr>
 
