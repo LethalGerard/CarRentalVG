@@ -28,26 +28,15 @@ namespace CarRentalVG.Data.Classes
             Car car2 = new Car(2, "DEF456", "SAAB", 20000, 1, VehicleTypes.Sedan, 100, VehicleStatuses.Available);
             Car car3 = new Car(3, "GHI789", "Tesla", 1000, 3, VehicleTypes.Sedan, 100, VehicleStatuses.Available);
             Car car4 = new Car(4, "JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, 300, VehicleStatuses.Available);
-            Car car5 = new Car(5, "JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, 300, VehicleStatuses.Available);
-            Motorcycles mc1 = new Motorcycles("MNO234", "Yamaha", 44945, 0.5, VehicleTypes.Motorcycle, 200, VehicleStatuses.Available);
+            Motorcycles mc1 = new Motorcycles(1,"MNO234", "Yamaha", 44945, 0.5, VehicleTypes.Motorcycle, 200, VehicleStatuses.Available);
 
             _vehicles.Add(car1);
-            _vehicles.Add(car2);
-            _vehicles.Add(car3);
-            _vehicles.Add(car4);
-            _vehicles.Add(car5);
             _vehicles.Add(mc1);
             
             //creating customers
             Customer customer1 = new Customer(1, 780925, "Göran", "Grenmoss");
-            Customer customer2 = new Customer(2, 051025, "Al", "Kis");
-            Customer customer3 = new Customer(3, 980905, "Sara", "Lastman");
-            Customer customer4 = new Customer(4, 442211, "Inga-Britt", "Bäckermo");
 
             _persons.Add(customer1);
-            _persons.Add(customer2);
-            _persons.Add(customer3);
-            _persons.Add(customer4);
 
 
             //creating bookings
@@ -76,7 +65,7 @@ namespace CarRentalVG.Data.Classes
         {            
            if (vehicleType == VehicleTypes.Motorcycle)
            {
-              _vehicles.Add(new Motorcycles(regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
+              _vehicles.Add(new Motorcycles(id, regNo, make, odometer, costKm, vehicleType, costDay, vehicleStatus));
            }
            else
            {
