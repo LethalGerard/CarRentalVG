@@ -62,10 +62,10 @@ public class BookingProcessor
         }
     }
 
-    public void SubmitBooking(VehicleInherit vehicleBook, IPerson customerBook)
+    public async Task SubmitBooking(VehicleInherit vehicleBook, IPerson customerBook)
     {
-        Booking newBooking = 
-            new Booking(vehicleBook, customerBook);
+        Booking newBooking = new Booking(vehicleBook, customerBook);
+        await Task.Delay(10000);
         _db.AddBooking(newBooking);
     }
 
