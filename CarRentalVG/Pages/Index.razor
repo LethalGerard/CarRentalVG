@@ -98,9 +98,8 @@
                             <option value="@cb.Ssn">@cb.FirstName @cb.LastName</option>
                         }
                     </select>
-                    <button class="btn btn-primary" @onclick="(()=>bp.SubmitBooking(vehicle, bp.selectedCustomer))">Add</button> 
+                    <button class="btn btn-primary" @onclick="(()=>bp.SubmitBooking(vehicle, bp.selectedCustomer))">Book</button> 
                 </td>
-
             </tr>
         }
     </tbody>
@@ -127,7 +126,7 @@
             {                
             <tr>
                 <td>@booking.Vehicle.RegNo</td>
-                <td>@booking.Customer.FirstName @booking.Customer.LastName</td>
+                <td>@booking.Customer.FirstName</td>
                 <td>@booking.KmRented</td>
                 <td></td>
                 <td>@booking.PickupDate.ToString("dd/MM/yyyy")</td>
