@@ -17,11 +17,11 @@ public class BookingProcessor
 
     public Customer c = new();
     public VehicleInherit v = new();
-    // public Booking b = new();
+    public Booking b = new();
     public string alertMessage = string.Empty;
     public Customer selectedCustomer = new();
 
-
+    public bool TaskDelayInProgress { get; private set; } = false;
 
     public void AddCustomer()
     {
@@ -34,11 +34,11 @@ public class BookingProcessor
             c.Ssn = 0;
             c.FirstName = "";
             c.LastName = "";
-            alertMessage = "";
+            alertMessage = "";            
         }
         else 
         {
-            alertMessage = "Check the input Customer fields!";
+            alertMessage = "Check the Customer input fields!";
         }
     }
 
@@ -46,6 +46,10 @@ public class BookingProcessor
     {
         if (v.RegNo != null && v.Make != null && v.Odometer != null && v.CostKm != null && v.VehicleType != null && v.CostDay != null)
         {
+            int nextId = _db.NextVehicleID;
+            //VehicleInherit inputVehicle = new Vehicle()
+            //{ Id = nextId };
+
             VehicleInherit inputVehicle = new VehicleInherit(default, v.RegNo, v.Make, v.Odometer, v.CostKm, v.VehicleType, v.CostDay, default);
             _db.Add(inputVehicle);
             v.RegNo = "";
@@ -58,15 +62,31 @@ public class BookingProcessor
         }
         else
         {
-            alertMessage = "Check the input Vehicle fields!";
+            alertMessage = "Check the Vehicle input fields!";
         }
     }
 
-    public async Task SubmitBooking(VehicleInherit vehicleBook, IPerson customerBook)
+    public async Task<IBooking> SubmitBooking(VehicleInherit vehicleBook, IPerson customerBook)
     {
+        TaskDelayInProgress = true;
+        alertMessage = "Processing the booking, please wait!";
         Booking newBooking = new Booking(vehicleBook, customerBook);
         await Task.Delay(10000);
         _db.AddBooking(newBooking);
+        alertMessage = "";
+        TaskDelayInProgress = false;
+        return newBooking;
     }
 
+
+/*    public void ReturnVehicle(vehicle, int kmReturned)
+    {
+        Vehicle.Odometer = kmReturned;
+        ReturnDate = returnDate;
+        CalcCost(ReturnDate, returnDate, kmReturned);
+        Vehicle.VehicleStatus = VehicleStatuses.Available;
+        Status = false;
+        KmReturned = kmReturned;
+    }
+*/
 }

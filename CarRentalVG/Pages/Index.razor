@@ -25,9 +25,9 @@
     </thead>
     <tbody>
         <tr>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.Ssn" placeholder="SSN" /></td>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.FirstName" placeholder="First Name" /></td>
-            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.LastName" placeholder="Last Name" /></td>
+            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.Ssn"         placeholder="SSN" /></td>
+            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.FirstName"   placeholder="First Name" /></td>
+            <td><input type="text" id="ssn" name="ssn" @bind="bp.c.LastName"    placeholder="Last Name" /></td>
             <td><button class="btn btn-primary" @onclick="bp.AddCustomer">Add</button></td>
         </tr>
         @*For every Customer in the list created*@
@@ -61,18 +61,19 @@
 
 
         <tr>
-            <td><input  @bind="bp.v.RegNo"    placeholder="RegNo" /></td>
-            <td><input  @bind="bp.v.Make"     placeholder="Make" /></td>
-            <td><input  @bind="bp.v.Odometer" placeholder="Odometer" /></td>
-            <td><input  @bind="bp.v.CostKm"   placeholder="Cost/km" /></td>
-            <td><select class="form-select" @bind="bp.v.VehicleType">
+            <td><input @bind="bp.v.RegNo" placeholder="RegNo" disabled="@bp.TaskDelayInProgress" /></td>
+            <td><input @bind="bp.v.Make" placeholder="Make" disabled="@bp.TaskDelayInProgress" /></td>
+            <td><input @bind="bp.v.Odometer" placeholder="Odometer" disabled="@bp.TaskDelayInProgress" /></td>
+            <td><input @bind="bp.v.CostKm" placeholder="Cost/km" disabled="@bp.TaskDelayInProgress" /></td>
+            <td>
+                <select class="form-select" @bind="bp.v.VehicleType" disabled="@bp.TaskDelayInProgress">
                 @foreach(var vt in Enum.GetValues(typeof(VehicleTypes)))
                     {
                         <option value="@vt">@vt</option>
                     }
                 </select></td>
-            <td><input  @bind="bp.v.CostDay"    placeholder="Cost/day" /></td>
-            <td><button class="btn btn-primary" @onclick="bp.AddVehicle">Add</button></td>
+            <td><input @bind="bp.v.CostDay" placeholder="Cost/day" disabled="@bp.TaskDelayInProgress" /></td>
+            <td><button class="btn btn-primary" @onclick="bp.AddVehicle" disabled="@bp.TaskDelayInProgress">Add</button></td>
         </tr>
 
 
@@ -92,14 +93,32 @@
                   </span>
                 </td>
                 <td>
-                    <select class="form-select" @bind="bp.selectedCustomer.Ssn" >
+
+                    @if (vehicle.VehicleStatus == VehicleStatuses.Available)
+                    {                    
+                    <select class="form-select" @bind="bp.selectedCustomer.Ssn" disabled="@bp.TaskDelayInProgress">
                         @foreach (var cb in bp.GetCustomer())
                         {
                             <option value="@cb.Ssn">@cb.FirstName @cb.LastName</option>
                         }
                     </select>
-                    <button class="btn btn-primary" @onclick="(()=>bp.SubmitBooking(vehicle, bp.selectedCustomer))">Book</button> 
+                    }
+                    @if (vehicle.VehicleStatus == VehicleStatuses.Booked)
+                    {
+                        <input @bind="bp.b.KmReturned" placeholder="Km-Return" disabled="@bp.TaskDelayInProgress" />
+                    }      
                 </td>
+                <td>
+                    @if (vehicle.VehicleStatus == VehicleStatuses.Available)
+                    {
+                    <button class="btn btn-primary" @onclick="(()=>bp.SubmitBooking(vehicle, bp.selectedCustomer))" disabled="@bp.TaskDelayInProgress">Book</button> 
+                    }
+                    @if (vehicle.VehicleStatus == VehicleStatuses.Booked)
+                    {
+                        //<button class="btn btn-secondary" @onclick="(()=>bp.ReturnVehicle(vehicle, bp.b.KmReturned))">Close</button>
+                    }
+                </td>
+
             </tr>
         }
     </tbody>
@@ -126,8 +145,8 @@
             {                
             <tr>
                 <td>@booking.Vehicle.RegNo</td>
-                <td>@booking.Customer.FirstName</td>
-                <td>@booking.KmRented</td>
+                    <td>@($"{booking.Customer.FirstName} {@booking.Customer.LastName}")</td>
+                    <td>@booking.Vehicle.Odometer</td>
                 <td></td>
                 <td>@booking.PickupDate.ToString("dd/MM/yyyy")</td>
                 <td></td>

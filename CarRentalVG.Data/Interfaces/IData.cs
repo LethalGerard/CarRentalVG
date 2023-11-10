@@ -12,5 +12,7 @@ public interface IData
     public void Add(IPerson inputCustomer);
     public void Add(VehicleInherit inputVehicle);
     public void AddBooking(Booking b);
-     int NextPersonID { get; set; }
+    int NextPersonID { get; set; }
+    int NextVehicleID { get; set; }
+
 }

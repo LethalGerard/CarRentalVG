@@ -23,7 +23,7 @@ public class Booking : IBooking
         var rentedDays = (returnDate - pickupDate).TotalDays;
         if (rentedDays < 1) { rentedDays = 1; }
 
-        var distance = kmReturned - KmRented;
+        var distance = KmReturned - KmRented;
 
         TotalCost = rentedDays * Vehicle.CostDay + distance * Vehicle.CostKm;
     }
@@ -40,14 +40,10 @@ public class Booking : IBooking
         Status = true;
     }
 
-/*    public void ReturnVehicle(DateTime returnDate, int kmReturned)
+    
+
+    public Booking()
     {
-        Vehicle.Odometer = kmReturned;
-        ReturnDate = returnDate;
-        CalcCost(ReturnDate, returnDate, kmReturned);
-        Vehicle.VehicleStatus = VehicleStatuses.Available;
-        Status = false;
-        KmReturned = kmReturned;
+        
     }
-*/
 }
