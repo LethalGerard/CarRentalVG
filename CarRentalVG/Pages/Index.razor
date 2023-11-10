@@ -105,7 +105,7 @@
                     }
                     @if (vehicle.VehicleStatus == VehicleStatuses.Booked)
                     {
-                        <input @bind="bp.b.KmReturned" placeholder="Km-Return" disabled="@bp.TaskDelayInProgress" />
+                        <input @bind-value="bp.KmReturned" placeholder="Km-Return" disabled="@bp.TaskDelayInProgress" />
                     }      
                 </td>
                 <td>
@@ -115,7 +115,7 @@
                     }
                     @if (vehicle.VehicleStatus == VehicleStatuses.Booked)
                     {
-                        //<button class="btn btn-secondary" @onclick="(()=>bp.ReturnVehicle(vehicle, bp.b.KmReturned))">Close</button>
+                        <button class="btn btn-secondary" @onclick="(()=>bp.ReturnVehicle(vehicle, bp.KmReturned))">Close</button>
                     }
                 </td>
 
@@ -145,8 +145,11 @@
             {                
             <tr>
                 <td>@booking.Vehicle.RegNo</td>
-                    <td>@($"{booking.Customer.FirstName} {@booking.Customer.LastName}")</td>
-                    <td>@booking.Vehicle.Odometer</td>
+                    <td>@booking.Customer.FirstName @booking.Customer.LastName</td>
+                    
+
+                    @* <td>@booking.Vehicle.Odometer</td> *@
+                    <td>@booking.KmRented</td>
                 <td></td>
                 <td>@booking.PickupDate.ToString("dd/MM/yyyy")</td>
                 <td></td>
@@ -170,3 +173,5 @@
         }
     </tbody>
 </table>
+
+

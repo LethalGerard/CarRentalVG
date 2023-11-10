@@ -18,15 +18,6 @@ public class Booking : IBooking
 
 
     //räkna ut cost
-    public void CalcCost(DateTime returnDate, DateTime pickupDate, int kmReturned)
-    {
-        var rentedDays = (returnDate - pickupDate).TotalDays;
-        if (rentedDays < 1) { rentedDays = 1; }
-
-        var distance = KmReturned - KmRented;
-
-        TotalCost = rentedDays * Vehicle.CostDay + distance * Vehicle.CostKm;
-    }
 
     public Booking(VehicleInherit vehicle, IPerson customer)
     {
@@ -34,6 +25,7 @@ public class Booking : IBooking
         Customer    = customer;
         PickupDate  = DateTime.Now;
         ReturnDate  = null;
+        KmRented = vehicle.Odometer;
         KmReturned  = null;
         TotalCost   = 0;
         Vehicle.VehicleStatus = VehicleStatuses.Booked;

@@ -11,16 +11,17 @@ public class BookingProcessor
     private readonly IData _db;
     public BookingProcessor(IData db) => _db = db;
 
-    public IEnumerable<IPerson> GetCustomer() { return _db.GetCustomer(); }
-    public IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default) { return _db.GetVehicles(status); }
-    public IEnumerable<IBooking> GetBookings() { return _db.GetBookings(); }
+    public IEnumerable<IPerson> GetCustomer() { return _db.Get<IPerson>(null); }
+    public IEnumerable<VehicleInherit> GetVehicles(VehicleStatuses status = default) { return _db.Get<VehicleInherit>(null); }
+    public IEnumerable<IBooking> GetBookings() { return _db.Get<IBooking>(null); }
 
     public Customer c = new();
     public VehicleInherit v = new();
     public Booking b = new();
     public string alertMessage = string.Empty;
     public Customer selectedCustomer = new();
-
+    public int KmReturned {  get; set; }
+    public double TotalCost { get; set; }
     public bool TaskDelayInProgress { get; private set; } = false;
 
     public void AddCustomer()
@@ -50,7 +51,7 @@ public class BookingProcessor
             //VehicleInherit inputVehicle = new Vehicle()
             //{ Id = nextId };
 
-            VehicleInherit inputVehicle = new VehicleInherit(default, v.RegNo, v.Make, v.Odometer, v.CostKm, v.VehicleType, v.CostDay, default);
+            VehicleInherit inputVehicle = new VehicleInherit(default, v.RegNo, v.Make, v.Odometer, v.CostKm, v.VehicleType, v.CostDay);
             _db.Add(inputVehicle);
             v.RegNo = "";
             v.Make = "";
@@ -58,7 +59,7 @@ public class BookingProcessor
             v.CostKm = 0;
             v.VehicleType = default;
             v.CostDay = 0;
-            alertMessage = "";
+            alertMessage = "";            
         }
         else
         {
@@ -70,8 +71,16 @@ public class BookingProcessor
     {
         TaskDelayInProgress = true;
         alertMessage = "Processing the booking, please wait!";
-        Booking newBooking = new Booking(vehicleBook, customerBook);
-        await Task.Delay(10000);
+
+        /*      var customers = _db.GetCustomer();
+                var person = customers.FirstOrDefault(c => c.Ssn == customerBook.Ssn);
+        */
+        var customers = _db.GetCustomer();
+        var person = customers.FirstOrDefault(c => c.Ssn == customerBook.Ssn);
+
+
+        Booking newBooking = new Booking(vehicleBook, person);
+        await Task.Delay(100);
         _db.AddBooking(newBooking);
         alertMessage = "";
         TaskDelayInProgress = false;
@@ -79,14 +88,29 @@ public class BookingProcessor
     }
 
 
-/*    public void ReturnVehicle(vehicle, int kmReturned)
+
+/*    public void CalcCost(DateTime returnDate, DateTime pickupDate, int kmReturned)
     {
-        Vehicle.Odometer = kmReturned;
-        ReturnDate = returnDate;
-        CalcCost(ReturnDate, returnDate, kmReturned);
-        Vehicle.VehicleStatus = VehicleStatuses.Available;
-        Status = false;
-        KmReturned = kmReturned;
+        var totDays = (returnDate - pickupDate).TotalDays;
+        if (totDays < 1) { totDays = 1; }
+
+        var distance = KmReturned - KmRented;
+
+        TotalCost = totDays * Vehicle.CostDay + distance * Vehicle.CostKm;
     }
 */
+
+
+    public void ReturnVehicle(VehicleInherit returnVehicle, int kmReturned)
+    {
+        var allVehicles = _db.GetVehicles();
+        var returnedVehicle = allVehicles.FirstOrDefault(v => v.RegNo == returnVehicle.RegNo);
+        returnedVehicle.VehicleStatus = CarRentalVG.Common.Enums.VehicleStatuses.Available;
+        returnedVehicle.Odometer += kmReturned;
+
+        var allBookings = _db.GetBookings();
+        var closedBooking = allBookings.FirstOrDefault(b => b.Vehicle.RegNo == returnedVehicle.RegNo);
+                
+    }
+
 }

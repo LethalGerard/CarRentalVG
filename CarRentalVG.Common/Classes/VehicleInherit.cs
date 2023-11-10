@@ -11,11 +11,11 @@ public class VehicleInherit
     public double CostKm { get; set; }
     public VehicleTypes VehicleType { get; set; }
     public double CostDay { get; set; }
-    public VehicleStatuses VehicleStatus { get; set; }
+    public VehicleStatuses VehicleStatus { get; set; } = VehicleStatuses.Available;
 
-    public VehicleInherit(int id, string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, double costday, VehicleStatuses vehicleStatus)
-    => (Id, RegNo, Make, Odometer, CostKm, VehicleType, CostDay, VehicleStatus)
-    = (id, regNo, make, odometer, costKm, vehicleType, costday, vehicleStatus);
+    public VehicleInherit(int id, string regNo, string make, int odometer, double costKm, VehicleTypes vehicleType, double costday)
+    => (Id, RegNo, Make, Odometer, CostKm, VehicleType, CostDay)
+    = (id, regNo, make, odometer, costKm, vehicleType, costday);
 
     public VehicleInherit() { }
 }
